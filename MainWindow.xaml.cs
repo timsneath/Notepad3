@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Gat.Controls;
 
 namespace Notepad3
 {
@@ -124,7 +125,8 @@ namespace Notepad3
 
         private void CommandAbout_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            
+            var about = new About();
+            about.Show();
         }
     }
 }

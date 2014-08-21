@@ -37,6 +37,9 @@
     <ApplicationIcon>notepad.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Gat.Controls.AboutBox">
+      <HintPath>packages\AboutBox.2.0.0\lib\net45\Gat.Controls.AboutBox.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.AvalonEdit">
       <HintPath>packages\AvalonEdit.5.0.1-pre\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
