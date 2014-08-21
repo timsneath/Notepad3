@@ -14,8 +14,13 @@ namespace Notepad3
             Exit = new RoutedUICommand("E_xit", "Exit", typeof(NotepadCustomCommands),
                 new InputGestureCollection { new KeyGesture(Key.F4, ModifierKeys.Alt, "Alt+F4") });
 
+            TimeDate = new RoutedUICommand("Time/_Date", "TimeDate", typeof(NotepadCustomCommands),
+                new InputGestureCollection { new KeyGesture(Key.F5) });
+            
             WordWrap = new RoutedUICommand("Word W_rap", "WordWrap", typeof(NotepadCustomCommands),
                 new InputGestureCollection { new KeyGesture(Key.W, ModifierKeys.Control, "Ctrl+W") });
+            Font = new RoutedUICommand("_Font", "Font", typeof(NotepadCustomCommands));
+
             ShowWhitespace = new RoutedUICommand("Show _Whitespace", "ShowWhitespace", typeof(NotepadCustomCommands),
                 new InputGestureCollection { new KeyGesture(Key.D8, ModifierKeys.Control | ModifierKeys.Shift, "Ctrl+Shift+8") });
             ShowLineEndings = new RoutedUICommand("Show Line _Endings", "ShowLineEndings", typeof(NotepadCustomCommands),
@@ -29,7 +34,9 @@ namespace Notepad3
         }
 
         public static RoutedUICommand Exit { get; private set; }
+        public static RoutedUICommand TimeDate { get; private set; }
         public static RoutedUICommand WordWrap { get; private set; }
+        public static RoutedUICommand Font { get; private set;  }
         public static RoutedUICommand ShowWhitespace { get; private set; }
         public static RoutedUICommand ShowLineEndings { get; private set; }
         public static RoutedUICommand ShowWrapSymbols { get; private set; }

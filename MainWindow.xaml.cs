@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Gat.Controls;
 
 namespace Notepad3
 {
@@ -26,7 +25,6 @@ namespace Notepad3
         public MainWindow()
         {
             InitializeComponent();
-            //FilenameLabel.DataContext = textEditor.Document;
         }
 
         private void CommandNew_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -96,6 +94,55 @@ namespace Notepad3
             this.Close();
         }
 
+        private void CommandTimeDate_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            // insert current time and date in locale format
+            // Windows Notepad uses "1:40 PM 8/21/2014", but we use default .NET format
+            textEditor.Document.Insert(textEditor.CaretOffset, System.DateTime.Now.ToString());
+        }
+
+        private void CommandFont_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            // show font dialog and set settings appropriately
+
+            // unfortunately there's no FontDialog in WPF, so we have to use the WinForms one
+            // that requires we convert between System.Windows.Typeface and System.Drawing.Font
+            var dialog = new System.Windows.Forms.FontDialog();
+
+            System.Drawing.FontStyle winformsFontStyle = System.Drawing.FontStyle.Regular;
+
+            if (textEditor.FontStyle == FontStyles.Italic || textEditor.FontStyle == FontStyles.Oblique) {
+                winformsFontStyle = winformsFontStyle | System.Drawing.FontStyle.Italic;
+            }
+
+            if (textEditor.FontWeight == FontWeights.Bold) {
+                winformsFontStyle = winformsFontStyle | System.Drawing.FontStyle.Bold;
+            }
+
+
+            var winformsFont = new System.Drawing.Font(
+                                textEditor.FontFamily.ToString(),
+                                (float)(textEditor.FontSize * 72.0 / 92.0), // WPF uses a logical 96dpi
+                                winformsFontStyle
+                               );
+
+            dialog.Font = winformsFont;
+
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                winformsFont = dialog.Font;
+                
+                textEditor.FontFamily = new FontFamily(winformsFont.FontFamily.Name);
+                textEditor.FontSize = winformsFont.SizeInPoints * 96.0 / 72.0; // WPF uses a logical 96dpi
+                textEditor.FontStyle = winformsFont.Italic ? FontStyles.Italic : FontStyles.Normal;
+                textEditor.FontWeight = winformsFont.Bold   ? FontWeights.Bold : FontWeights.Normal;
+                textEditor.FontStretch = FontStretches.Normal;
+
+                //Properties.Settings["EditorFont"] = dialog.Font;
+            }
+
+        }
+
         private void CommandWordWrap_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             textEditor.WordWrap = !textEditor.WordWrap;
@@ -125,8 +172,8 @@ namespace Notepad3
 
         private void CommandAbout_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var about = new About();
-            about.Show();
+            var about = new AboutBox();
+            about.ShowDialog();
         }
     }
 }

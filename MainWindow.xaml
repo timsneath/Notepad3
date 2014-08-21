@@ -4,7 +4,7 @@
         xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
         xmlns:cmd="clr-namespace:Notepad3"
         xmlns:diagnostics="clr-namespace:System.Diagnostics;assembly=WindowsBase"
-        Title="Notepad3" Height="350" Width="525" Icon="notepad.ico">
+        Title="Notepad3" Height="350" Width="525" Icon="Resources/notepad.ico">
     <Window.CommandBindings>
         <!-- File -->
         <CommandBinding Command="New" Executed="CommandNew_Executed" />
@@ -14,9 +14,13 @@
         <CommandBinding Command="cmd:NotepadCustomCommands.Exit" Executed="CommandExit_Executed" />
         
         <!-- Edit -->
+        <CommandBinding Command="cmd:NotepadCustomCommands.TimeDate" Executed="CommandTimeDate_Executed" />
+        
+        <!-- Format -->
+        <CommandBinding Command="cmd:NotepadCustomCommands.WordWrap" Executed="CommandWordWrap_Executed" />
+        <CommandBinding Command="cmd:NotepadCustomCommands.Font" Executed="CommandFont_Executed" />
         
         <!-- View -->
-        <CommandBinding Command="cmd:NotepadCustomCommands.WordWrap" Executed="CommandWordWrap_Executed" />
         <CommandBinding Command="cmd:NotepadCustomCommands.ShowWhitespace" Executed="CommandShowWhitespace_Executed" />
         <CommandBinding Command="cmd:NotepadCustomCommands.ShowLineEndings" Executed="CommandShowLineEndings_Executed" />
         <CommandBinding Command="cmd:NotepadCustomCommands.ShowWrapSymbols" Executed="CommandShowWrapSymbols_Executed" />
@@ -31,7 +35,11 @@
                 <MenuItem Header="_New" Command="New" />
                 <MenuItem Header="_Open" Command="Open" />
                 <MenuItem Header="_Save" Command="Save" />
-                <MenuItem Header="Save _As" Command="SaveAs" />
+                <MenuItem Header="Save _As..." Command="SaveAs" />
+                <Separator />
+                <MenuItem Header="Page Set_up" />
+                <MenuItem Header="_Print" Command="Print"/>
+                <Separator />
                 <MenuItem Header="E_xit" Command="cmd:NotepadCustomCommands.Exit" />
             </MenuItem>
             <MenuItem Header="_Edit">
@@ -45,10 +53,15 @@
                 <Separator />
                 <MenuItem Header="_Find" Command="Find" CommandTarget="{Binding ElementName=textEditor}" />
                 <MenuItem Header="_Replace" Command="Replace" CommandTarget="{Binding ElementName=textEditor}" />
+                <Separator />
+                <MenuItem Header="Select _All" Command="SelectAll" CommandTarget="{Binding ElementName=textEditor}" />
+                <MenuItem Header="Time/_Date" Command="cmd:NotepadCustomCommands.TimeDate" />
+            </MenuItem>
+            <MenuItem Header="_Format">
+                <MenuItem Command="cmd:NotepadCustomCommands.WordWrap" IsCheckable="True" IsChecked="False" />
+                <MenuItem Header="_Font..." Command="cmd:NotepadCustomCommands.Font" />
             </MenuItem>
             <MenuItem Header="_View">
-                <MenuItem Command="cmd:NotepadCustomCommands.WordWrap" IsCheckable="True" IsChecked="False" />
-                <Separator />
                 <MenuItem Command="cmd:NotepadCustomCommands.ShowWhitespace" IsCheckable="True" IsChecked="False" />
                 <MenuItem Command="cmd:NotepadCustomCommands.ShowLineEndings" IsCheckable="True" IsChecked="False" />
                 <MenuItem Command="cmd:NotepadCustomCommands.ShowWrapSymbols" IsCheckable="True" IsChecked="False" />
@@ -59,6 +72,7 @@
                 <MenuItem Command="cmd:NotepadCustomCommands.About" />
             </MenuItem>
         </Menu>
+        <!--
         <StatusBar Height="Auto" Width="Auto" DockPanel.Dock="Bottom" >
             <StackPanel Orientation="Horizontal">
                 <Label Content="File: "/>
@@ -67,6 +81,7 @@
                 <Label Content="Line: " />
             </StackPanel>
         </StatusBar>
+        -->
         <avalonEdit:TextEditor DockPanel.Dock="Top"
             Name="textEditor"
             FontFamily="Consolas"
